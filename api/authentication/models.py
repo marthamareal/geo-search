@@ -1,11 +1,7 @@
 import uuid
-from datetime import datetime, timedelta
 
-import jwt
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.gis.db import models
-
-from api.geosearch.settings import SECRET_KEY
 
 
 class UserManager(BaseUserManager):
@@ -38,18 +34,6 @@ class GeoUser(AbstractBaseUser):
         Returns a string representation of `User`.
         """
         return self.email
-
-    @property
-    def token(self):
-        return self._generate_jwt_token()
-
-    def _generate_jwt_token(self):
-        payload = {
-            "id": str(self.id),
-            "email": self.email,
-            "exp": datetime.now() + timedelta(days=1)
-        }
-        return jwt.encode(payload, SECRET_KEY).decode('utf-8')
 
     def has_perm(self, perm, obj=None):
         return self.is_staff

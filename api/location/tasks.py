@@ -21,6 +21,6 @@ def search_location_points(request_data):
 
 @app.task(ignore_result=True)
 def create_request_history(request_data):
-    request = RequestHistory.objects.create_or_update(**request_data)
+    request = RequestHistory.objects.create(**request_data)
     request.save()
 

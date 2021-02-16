@@ -1,12 +1,12 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from api.location.models import RequestHistory, Location
 from api.location.serializers import RequestHistorySerializer, LocationSerializer
 from api.location.tasks import search_location_points, create_request_history
+from api.location.validators import validated_request_params
 
 
 class RequestHistoryViewSet(viewsets.ModelViewSet):
@@ -21,13 +21,8 @@ class PointSearchViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
 
     @action(detail=False, methods=['get'])
-    def get_locations(self, request, **kwargs):
-        request_data = {}
-        for param in ['x', 'y', 'n', 'operation_type']:
-            if param not in request.GET:
-                raise ValidationError({'error': '%s is required.' % param})
-
-            request_data[param] = request.GET.get(param)
+    def get_locations(self, request):
+        request_data = validated_request_params(request)
 
         if request_data:
             # add user to the request

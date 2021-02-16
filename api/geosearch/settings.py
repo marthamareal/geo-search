@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -89,9 +90,10 @@ DATABASES = {
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
         'PORT': os.getenv('PORT'),
-    }
+    },
 }
-
+if 'test' in sys.argv:
+    DATABASES['default']['NAME'] = ':memory:'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

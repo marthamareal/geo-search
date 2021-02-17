@@ -18,6 +18,11 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         return self._create_user(email, password, **extra_fields)
 
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields['is_staff'] = True
+        extra_fields['is_superuser'] = True
+        return self._create_user(email, password, **extra_fields)
+
 
 class GeoUser(AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)

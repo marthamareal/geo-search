@@ -1,10 +1,14 @@
+from django.contrib.auth.hashers import make_password
+from model_bakery import baker
+
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.tests.base import BaseTest
+from django.test import TestCase
+from django.urls import reverse
 
 
-class TestUserRegistration(BaseTest):
+class TestUserRegistration(TestCase):
 
     def setUp(self):
         self.client = APIClient()
@@ -66,4 +70,43 @@ class TestUserRegistration(BaseTest):
                 ]
             }
         )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class TestUserLogin(TestCase):
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = baker.make(
+            'authentication.GeoUser',
+            password=make_password('pass1234')
+        )
+
+    def test_user_login_with_correct_credentials_succeeds(self):
+        response = self.client.post(
+            reverse('login'),
+            data={
+                'email': self.user.email,
+                'password': 'pass1234'
+            },
+            format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_login_with_wrong_credentials_succeeds(self):
+        response = self.client.post(
+            reverse('login'),
+            data={
+                'email': self.user.email,
+                'password': 'wrongpassword'
+            },
+            format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_user_login_with_missing_credentials_succeeds(self):
+        response = self.client.post(
+            reverse('login'),
+            data={
+                'email': self.user.email
+            },
+            format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

@@ -1,12 +1,12 @@
+from django.test import TestCase
+
 from django.contrib.auth.hashers import make_password
 from model_bakery import baker
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.tests.base import BaseTest
 
-
-class TestPointSearch(BaseTest):
+class TestPointSearch(TestCase):
 
     def setUp(self):
         self.user = baker.make(

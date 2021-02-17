@@ -17,6 +17,7 @@ future==0.18.2
 importlib-metadata==3.4.0
 kombu==5.0.2
 mock==4.0.3
+model-bakery==1.2.1
 postgis==1.0.4
 prompt-toolkit==3.0.16
 psycopg2-binary==2.8.6

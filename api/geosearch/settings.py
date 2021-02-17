@@ -27,7 +27,7 @@ SECRET_KEY = '!bxn(r@jo&v!&y(her=3r5!fxv#5-x43l_l0ptl!6m!y!jjjje'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -140,7 +140,7 @@ AUTH_USER_MODEL = 'authentication.GeoUser'
 
 REST_FRAMEWORK = {
     'NON_FIELD_ERRORS_KEY': 'error',
-
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',

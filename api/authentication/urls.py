@@ -6,6 +6,6 @@ from api.authentication.views import RegistrationAPIView, LoginAPIView
 
 urlpatterns = [
     path('users/signup/', RegistrationAPIView.as_view()),
-    path('users/login/', LoginAPIView.as_view()),
+    path('users/login/', LoginAPIView.as_view(), name='login'),
     path('users/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

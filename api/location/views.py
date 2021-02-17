@@ -1,3 +1,5 @@
+from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.geos import Point
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -29,6 +31,14 @@ class PointSearchViewSet(viewsets.ModelViewSet):
             request_data['user_id'] = str(request.user.id)
             # Record request in history
             create_request_history.delay(request_data)
-            # search Available locations
-            results = search_location_points.delay(request_data)
-            return Response(results.get(), status=status.HTTP_200_OK)
+            # # search Available locations
+            user_location = Point(float(request_data['x']), float(request_data['y']), srid=4326)
+            locations = Location.objects.annotate(
+                distance=Distance('point', user_location)
+            )
+            if request_data['operation_type'] == 'nearest':
+                locations = locations.order_by('distance')[0:int(request_data['n'])]
+            else:
+                locations = locations.order_by('-distance')[0:int(request_data['n'])]
+
+            return Response(LocationSerializer(locations, many=True).data, status=status.HTTP_200_OK)

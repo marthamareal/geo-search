@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth import password_validation
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.gis.db import models
 
@@ -46,3 +47,10 @@ class GeoUser(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return self.is_superuser
 
+    def save(self, *args, **kwargs):
+        # always use a unique id
+        self.id = uuid.uuid4()
+        super().save(*args, **kwargs)
+        if self._password is not None:
+            password_validation.password_changed(self._password, self)
+            self._password = None

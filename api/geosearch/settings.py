@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django_redis',
 
+    'corsheaders',
+
     'rest_framework',
     'rest_framework_gis',
 
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -198,3 +201,6 @@ CACHES = {
 }
 # set cache time to 15 minutes.
 CACHE_TTL = 60 * 15
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True

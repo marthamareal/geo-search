@@ -46,6 +46,8 @@ import {axiosInstance} from "../base";
 
     render(){
         return (
+            <div className="auth-wrapper">
+        <div className="auth-inner">
             <form onSubmit={this.onSubmit}>
                 <h3>Sign Up</h3>
 
@@ -80,6 +82,8 @@ import {axiosInstance} from "../base";
                     Already registered <a href="/sign-in">sign in?</a>
                 </p>
             </form>
+        </div>
+            </div>
         );
     }
 }

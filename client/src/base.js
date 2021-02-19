@@ -6,10 +6,12 @@ let settings = {
   baseURL: url
 };
 
-if (localStorage.getItem("token")) {
+if (localStorage.getItem("access")) {
   settings = {
     baseURL: url,
-    headers: { token: localStorage.getItem("token") }
+    headers: {
+      Authorization: `Bearer `+ localStorage.getItem("access")
+    }
   };
 }
 export const axiosInstance = axios.create(settings);

@@ -4,25 +4,22 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Home from "./components/Home";
 
 function App() {
-  return (<Router>
+  return (
+      <Router>
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>GeoSearch</Link>
+          <Link className="navbar-brand" to={"/"}>GeoSearch</Link>
         </div>
       </nav>
-
-      <div className="auth-wrapper">
-        <div className="auth-inner">
           <Switch>
-            <Route exact path='/' component={Login} />
+            <Route exact path='/' component={Home} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={Signup} />
           </Switch>
-        </div>
-      </div>
     </div>
         </Router>
   );

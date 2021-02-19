@@ -5,7 +5,6 @@
   box-sizing: border-box;
 }
 body {
-  background: #acaeaf !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
@@ -71,4 +70,14 @@ body, html, .App, #root, .auth-wrapper {
 
 .register a {
   color: #167bff;
+}
+
+.home {
+    margin: 125px;
+}
+.home form{
+  margin: 20px;
+}
+.results {
+    margin: 50px;
 }

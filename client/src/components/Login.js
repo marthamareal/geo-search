@@ -32,17 +32,22 @@ import {axiosInstance} from "../base";
         .then(response => {
           localStorage.setItem("access", response.data.access);
           localStorage.setItem("user_id", response.data.id);
+          this.props.history.push('/');
         })
         .catch(error => {
             if (error.response?.data?.detail){
                window.alert(error.response?.data?.detail)
             }
-            window.alert("Login failed")
+            else {
+                window.alert("Login failed")
+            }
         });
   };
 
     render(){
         return (
+            <div className="auth-wrapper">
+        <div className="auth-inner">
             <form onSubmit={this.onSubmit}>
                 <h3>Sign In</h3>
 
@@ -77,6 +82,8 @@ import {axiosInstance} from "../base";
                     Don't have an account? <a href="/sign-up">Sign Up</a>
                 </p>
             </form>
+        </div>
+            </div>
         );
     }
 }
